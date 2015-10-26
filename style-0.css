@@ -24,9 +24,19 @@
     color: #fff;
     font-size:5em;
 }
-#slide1 h4{
+#slide1 h2{
+    /*font-family: "s";*/
     color: #fff;
-    font-size:1.75em;
+    font-size:5em;
+}
+#slide1 .set-timer{
+    display: inline-block;
+    margin: 3vw;
+}
+
+#slide1 span{
+    color: #fff;
+    text-transform: uppercase;
 }
 #slide1:before {
     background: #333;

@@ -9,7 +9,7 @@ app.factory('time', [function(){
 
 app.controller('MainCtrl', ['$scope', 'posts', function($scope, posts){
     $scope.test = 'Hello world!';
-    $scope.posts = posts.posts;
+    $scope.posts = time.posts;
 
     $scope.incrementUpvotes = function(post) {
       post.upvotes += 1;
