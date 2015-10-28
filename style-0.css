@@ -19,14 +19,16 @@
 .centered-text{
     text-align: center;
 }
+#slide1{
+    font-family: "Source Sans Pro";
+    font-weight:100;
+    color: #fff;
+}
 #slide1 h1{
     font-family: "Pacifico";
-    color: #fff;
     font-size:5em;
 }
 #slide1 h2{
-    /*font-family: "s";*/
-    color: #fff;
     font-size:5em;
 }
 #slide1 .set-timer{
