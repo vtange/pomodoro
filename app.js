@@ -22,29 +22,37 @@ app.controller('MainCtrl', ['$scope', 'time', '$interval', function($scope, time
     $scope.addBreak = function() {
         if (!timerOn) {
       $scope.timers.cooldown += 1;
+            if ($scope.currentMode === 'Break!') {
       $scope.timeLeft = $scope.timers.cooldown;//update time
       secs = 60 * $scope.timeLeft;
+            }
         }
     };
     $scope.lowerBreak = function() {
         if (!timerOn) {
       $scope.timers.cooldown -= 1;
+            if ($scope.currentMode === 'Break!') {
       $scope.timeLeft = $scope.timers.cooldown;//update time
       secs = 60 * $scope.timeLeft;
+            }
         }
     };
     $scope.addSession = function() {
         if (!timerOn) {
       $scope.timers.session += 1;
+              if ($scope.currentMode === 'Session') {
       $scope.timeLeft = $scope.timers.session;//update time
       secs = 60 * $scope.timeLeft;
+              }
         }
     };
     $scope.lowerSession = function() {
         if (!timerOn) {
       $scope.timers.session -= 1;
+            if ($scope.currentMode === 'Session') {
       $scope.timeLeft = $scope.timers.session;//update time
       secs = 60 * $scope.timeLeft;
+            }
         }
     };
 
@@ -59,10 +67,10 @@ app.controller('MainCtrl', ['$scope', 'time', '$interval', function($scope, time
     
   $scope.toggleTimer = function() {
     if (!timerOn) {
-      if ($scope.currentMode === 'Sesson') {
-        $scope.originalSetTime = $scope.timers.cooldown;
-      } else {
+      if ($scope.currentMode === 'Session') {
         $scope.originalSetTime = $scope.timers.session;
+      } else {
+        $scope.originalSetTime = $scope.timers.cooldown;
       }
 
       updateTimer();
