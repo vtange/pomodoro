@@ -10,31 +10,105 @@ app.factory('time', [function(){
   return timers;
 }]);//end of service
 
-app.controller('MainCtrl', ['$scope', 'time', function($scope, time){
-    $scope.timers = time;
-    $scope.currentMode = "Session";
-    $scope.timerOn = false;
+app.controller('MainCtrl', ['$scope', 'time', '$interval', function($scope, time, $interval){
+    $scope.timers = time; // load service
+    $scope.timeLeft = $scope.timers.session;//shown time
+    $scope.currentMode = "Session";//session mode or break mode
+
+    var timerOn = false;
+    var secs = 60 * $scope.timeLeft;
     
-    $scope.toggleTimer = function(){
-        if ($scope.timerOn == false){
-            $scope.timerOn = true;   
-        }
-        else {
-            $scope.timerOn = false;   
-        }
+  $scope.toggleTimer = function() {
+    if (!timerOn) {
+        //pause and unpause with changes
+      if ($scope.currentName === 'Session') {
+        $scope.timeLeft = $scope.timers.cooldown;
+        secs = 60 * $scope.timeLeft;
+      } else {
+        $scope.timeLeft = $scope.timers.session;
+        secs = 60 * $scope.timeLeft;
+      }
+      
+      updateTimer();
+      timerOn = $interval(updateTimer, 1000);
+    } else {
+      $interval.cancel(timerOn);
+      timerOn = false;
     }
+  }
+function updateTimer() {
+    secs -= 1;
+    if (secs < 0) {
+      // countdown is finished
+      
+      // Play audio
+      var wav = 'http://www.oringz.com/oringz-uploads/sounds-917-communication-channel.mp3';
+      var audio = new Audio(wav);
+			audio.play();
+      
+      // toggle break and session during hit 0
+      if ($scope.sessionName === 'Break!') {
+        $scope.sessionName = 'Session';
+        $scope.timeLeft = 60 * $scope.timers.session;
+        $scope.originalSetTime = $scope.timers.session;
+        secs = 60 * $scope.timers.session;
+      } else {
+        $scope.sessionName = 'Break!';
+        $scope.timeLeft = 60 * $scope.timers.cooldown;
+        $scope.originalSetTime = $scope.timers.cooldown;
+        secs = 60 * $scope.timers.cooldown;
+      }
+    } else {
+      if ($scope.sessionName === 'Break!') {
+        //use and move red box
+      } else {
+        //use and move grn box
+      }
+	  $scope.timeLeft = secondsToHms(secs);//update time left
+      
+      var totalsecs = 60 * $scope.originalSetTime;
+      var percentage = Math.abs((secs / totalsecs) * 100 - 100);
+      //move the box with percentage
+    }
+  }
+  
+
+      
     $scope.addBreak = function() {
+        if (!timerOn) {
       $scope.timers.cooldown += 1;
+        }
     };
     $scope.lowerBreak = function() {
+        if (!timerOn) {
       $scope.timers.cooldown -= 1;
+        }
     };
     $scope.addSession = function() {
+        if (!timerOn) {
       $scope.timers.session += 1;
+      $scope.timeLeft = $scope.timers.session;//update time
+        }
     };
     $scope.lowerSession = function() {
+        if (!timerOn) {
       $scope.timers.session -= 1;
+      $scope.timeLeft = $scope.timers.session;//update time
+        }
     };
+    
+    
+    
+      
+  function secondsToHms(sec) {
+    sec = Number(sec);
+    var h = Math.floor(sec / 3600);
+    var m = Math.floor(sec % 3600 / 60);
+    var s = Math.floor(sec % 3600 % 60);
+    return (
+      (h > 0 ? h + ":" + (m < 10 ? "0" : "") : "") + m + ":" + (s < 10 ? "0" : "") + s
+    ); 
+  }
     
 }]);//end of controller
 
