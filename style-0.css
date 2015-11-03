@@ -31,6 +31,19 @@
 #slide1 h2{
     font-size:5em;
 }
+#slide1 h3{
+    font-size:3em;
+}
+.plusMinus{
+    display:inline-block;
+    padding-left:5px;
+    padding-right:5px;
+    cursor: pointer;
+    -webkit-user-select: none; /* Chrome/Safari */        
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+ */
+}
+
 #slide1 .set-timer{
     display: inline-block;
     margin: 3vw;
@@ -47,6 +60,7 @@
 
 
 .clock {
+  cursor: pointer;    
   border:3px solid green;
   border-radius: 50%;
     
@@ -77,4 +91,7 @@
   position:relative; /* keep middle alignment*/
   top: 50%;
   transform: translateY(-50%);
+    -webkit-user-select: none; /* Chrome/Safari */        
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+ */
 }

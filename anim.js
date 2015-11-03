@@ -1,105 +1,109 @@
-(function() {
-/*
- * Starts any clocks using the user's local time
- * From: cssanimation.rocks/clocks
- */
-function initLocalClocks() {
-  // Get the local time using JS
-  var date = new Date;
-  var seconds = date.getSeconds();
-  var minutes = date.getMinutes();
-  var hours = date.getHours();
-
-  // Create an object with each hand and it's angle in degrees
-  var hands = [
-    {
-      hand: 'hours',
-      angle: (hours * 30) + (minutes / 2)
-    },
-    {
-      hand: 'minutes',
-      angle: (minutes * 6)
-    },
-    {
-      hand: 'seconds',
-      angle: (seconds * 6)
-    }
-  ];
-  // Loop through each of these hands to set their angle
-  for (var j = 0; j < hands.length; j++) {
-    var elements = document.querySelectorAll('.' + hands[j].hand);
-      console.log('.' + hands[j].hand);
-      console.log(document.querySelectorAll('.' + hands[j].hand));
-    for (var k = 0; k < elements.length; k++) {
-         console.log(k);
-        console.log(elements[k]);
-        elements[k].style.webkitTransform = 'rotateZ('+ hands[j].angle +'deg)';
-        elements[k].style.MozTransform = 'rotateZ('+ hands[j].angle +'deg)';
-        elements[k].style.transform = 'rotateZ('+ hands[j].angle +'deg)';
-        // If this is a minute hand, note the seconds position (to calculate minute position later)
-        if (hands[j].hand === 'minutes') {
-          elements[k].parentNode.setAttribute('data-second-angle', hands[j + 1].angle);
+var app = angular.module('PomodoroApp', []);
+app.controller('MainCtrl', function($scope, $interval) {
+  $scope.breakLength = 5;
+  $scope.sessionLength = 25;
+  $scope.timeLeft = $scope.sessionLength;
+  $scope.fillHeight = '0%';
+  $scope.sessionName = 'Session';
+  $scope.currentTotal;
+  
+  var runTimer = false;
+  var secs = 60 * $scope.timeLeft;
+  $scope.originalTime = $scope.sessionLength;
+  
+  function secondsToHms(d) {
+    d = Number(d);
+    var h = Math.floor(d / 3600);
+    var m = Math.floor(d % 3600 / 60);
+    var s = Math.floor(d % 3600 % 60);
+    return (
+      (h > 0 ? h + ":" + (m < 10 ? "0" : "") : "") + m + ":" + (s < 10 ? "0" : "") + s
+    ); 
+  }
+  
+  // Change default session length
+  $scope.sessionLengthChange = function(time) {
+    if (!runTimer){
+      if ($scope.sessionName === 'Session') {
+        $scope.sessionLength += time;
+        if ($scope.sessionLength < 0) {
+          $scope.sessionLength = 0;
         }
-    }
-  }
-}
-/*
- * Set a timeout for the first minute hand movement (less than 1 minute), then rotate it every minute after that
- */
-function setUpMinuteHands() {
-  // Find out how far into the minute we are
-  var containers = document.querySelectorAll('.minutes-container');
-  var secondAngle = containers[0].getAttribute("data-second-angle");
-  if (secondAngle > 0) {
-    // Set a timeout until the end of the current minute, to move the hand
-    var delay = (((360 - secondAngle) / 6) + 0.1) * 1000;
-    setTimeout(function() {
-      moveMinuteHands(containers);
-    }, delay);
-  }
-}
-
-/*
- * Do the first minute's rotation
- */
-function moveMinuteHands(containers) {
-  for (var i = 0; i < containers.length; i++) {
-    containers[i].style.webkitTransform = 'rotateZ(6deg)';
-    containers[i].style.transform = 'rotateZ(6deg)';
-  }
-  // Then continue with a 60 second interval
-  setInterval(function() {
-    for (var i = 0; i < containers.length; i++) {
-      if (containers[i].angle === undefined) {
-        containers[i].angle = 12;
-      } else {
-        containers[i].angle += 6;
+        $scope.timeLeft = $scope.sessionLength;
+        $scope.originalTime = $scope.sessionLength;
+        secs = 60 * $scope.sessionLength;
       }
-      containers[i].style.webkitTransform = 'rotateZ('+ containers[i].angle +'deg)';
-      containers[i].style.transform = 'rotateZ('+ containers[i].angle +'deg)';
     }
-  }, 60000);
-}
-/*
- * Move the second containers
- */
-function moveSecondHands() {
-  var containers = document.querySelectorAll('.seconds-container');
-  setInterval(function() {
-    for (var i = 0; i < containers.length; i++) {
-      if (containers[i].angle === undefined) {
-        containers[i].angle = 6;
-      } else {
-        containers[i].angle += 6;
+  }
+  
+  // Change default break length
+  $scope.breakLengthChange = function(time) {
+    if (!runTimer){
+      $scope.breakLength += time;
+      if ($scope.breakLength < 0) {
+        $scope.breakLength = 0;
       }
-      containers[i].style.webkitTransform = 'rotateZ('+ containers[i].angle +'deg)';
-      containers[i].style.transform = 'rotateZ('+ containers[i].angle +'deg)';
+      if ($scope.sessionName === 'Break!') {
+        $scope.timeLeft = $scope.breakLength;
+        $scope.originalTime = $scope.breakLength;
+        secs = 60 * $scope.breakLength;
+      }
     }
-  }, 1000);
-}
-    initLocalClocks();
-    setUpMinuteHands();
-    moveSecondHands()
-    
-  //end of function
-})();
+  }
+  
+  $scope.toggleTimer = function() {
+    if (!runTimer) {
+      if ($scope.currentName === 'Sesson') {
+        $scope.currentLength = $scope.sessionLength;
+      } else {
+        $scope.currentLength = $scope.breakLength;
+      }
+      
+      updateTimer();
+      runTimer = $interval(updateTimer, 1000);
+    } else {
+      $interval.cancel(runTimer);
+      runTimer = false;
+    }
+  }
+  
+  function updateTimer() {
+    secs -= 1;
+    if (secs < 0) {
+      // countdown is finished
+      
+      // Play audio
+      var wav = 'http://www.oringz.com/oringz-uploads/sounds-917-communication-channel.mp3';
+      var audio = new Audio(wav);
+			audio.play();
+      
+      // toggle break and session
+      $scope.fillColor = '#333333';
+      if ($scope.sessionName === 'Break!') {
+        $scope.sessionName = 'Session';
+        $scope.currentLength = $scope.sessionLength;
+        $scope.timeLeft = 60 * $scope.sessionLength;
+        $scope.originalTime = $scope.sessionLength;
+        secs = 60 * $scope.sessionLength;
+      } else {
+        $scope.sessionName = 'Break!';
+        $scope.currentLength = $scope.breakLength;
+        $scope.timeLeft = 60 * $scope.breakLength;
+        $scope.originalTime = $scope.breakLength;
+        secs = 60 * $scope.breakLength;
+      }
+    } else {
+      if ($scope.sessionName === 'Break!') {
+        $scope.fillColor = '#FF4444';
+      } else {
+        $scope.fillColor = '#99CC00';
+      }
+	    $scope.timeLeft = secondsToHms(secs);
+      
+      var denom = 60 * $scope.originalTime;
+      var perc = Math.abs((secs / denom) * 100 - 100);
+      $scope.fillHeight = perc + '%';
+    }
+  }
+  
+});

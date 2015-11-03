@@ -13,14 +13,14 @@
                 <hr></hr>
                 <h1>FreeCodeCamp</h1>
                 <div class="set-timer">
-                <span>break length</span> 
-                    <h2>{{timers.cooldown}}</h2>
+                <span>break length</span><br>
+                    <h3 class="plusMinus" data-ng-click="lowerBreak()">-</h3><h2 class="plusMinus">{{timers.cooldown}}</h2><h3 class="plusMinus" data-ng-click="addBreak()">+</h3>
                 </div>
                 
                 
                 <div class="set-timer">
-                <span>session length</span>
-                    <h2>{{timers.session}}</h2>
+                <span>session length</span><br>
+                    <h3 class="plusMinus" data-ng-click="lowerSession()">-</h3><h2 class="plusMinus">{{timers.session}}</h2><h3 class="plusMinus" data-ng-click="addSession()">+</h3>
                 </div>
                 
                 

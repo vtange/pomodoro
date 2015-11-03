@@ -13,20 +13,27 @@ app.factory('time', [function(){
 app.controller('MainCtrl', ['$scope', 'time', function($scope, time){
     $scope.timers = time;
     $scope.currentMode = "Session";
+    $scope.timerOn = false;
     
-    
-    
-    $scope.addbreak = function() {
-      timers.cooldown += 1;
+    $scope.toggleTimer = function(){
+        if ($scope.timerOn == false){
+            $scope.timerOn = true;   
+        }
+        else {
+            $scope.timerOn = false;   
+        }
+    }
+    $scope.addBreak = function() {
+      $scope.timers.cooldown += 1;
     };
-    $scope.lowerbreak = function() {
-      timers.cooldown -= 1;
+    $scope.lowerBreak = function() {
+      $scope.timers.cooldown -= 1;
     };
-    $scope.addsession = function() {
-      timers.session += 1;
+    $scope.addSession = function() {
+      $scope.timers.session += 1;
     };
-    $scope.lowersession = function() {
-      timers.session -= 1;
+    $scope.lowerSession = function() {
+      $scope.timers.session -= 1;
     };
     
 }]);//end of controller
