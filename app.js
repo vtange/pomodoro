@@ -57,7 +57,7 @@ app.controller('MainCtrl', ['$scope', 'time', '$interval', function($scope, time
     };
 
   $scope.checkTimer = function() {
-      if (timerOn == false) {
+      if (!timerOn) {
         return true;
       }
       else {
