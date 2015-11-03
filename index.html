@@ -29,11 +29,13 @@
                 
                 <article class="clock" data-ng-click="toggleTimer()">
                   <div class="progress-container">
-                    <div class="progress-text">
+                      <div class="progress-bar">
+                      </div>
+                  </div>
+                  <div class="progress-text">
                         <h3 data-ng-show="checkTimer()"><i class="fa fa-pause"></i>&#9612;&#9612;</h3>
                         <h2>{{currentMode}}</h2>
                         <h2>{{timeLeft}}</h2>
-                    </div>
                   </div>
                 </article>
              <hr></hr>

@@ -81,16 +81,23 @@
   right: 0;
   bottom: 0;
   left: 0;
-  background-color:green;
-    
+
   margin:5px;
   border-radius: 50%;
+  overflow:hidden; /*limit childs within*/
+}
+
+.progress-bar{
+  position: absolute;
+  background-color: green;
+    
+  width:10%;
 }
 
 .progress-text {
   position:relative; /* keep middle alignment*/
-  top: 50%;
-  transform: translateY(-50%);
+  top: 50%; /*align vertical*/
+  transform: translateY(-50%); /*align vertical*/
     -webkit-user-select: none; /* Chrome/Safari */        
     -moz-user-select: none; /* Firefox */
     -ms-user-select: none; /* IE10+ */
