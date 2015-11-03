@@ -29,7 +29,7 @@ app.controller('MainCtrl', ['$scope', 'time', '$interval', function($scope, time
         }
     };
     $scope.lowerBreak = function() {
-        if (!timerOn) {
+        if (!timerOn  && $scope.timers.cooldown > 1) {
       $scope.timers.cooldown -= 1;
             if ($scope.currentMode === 'Break!') {
       $scope.timeLeft = $scope.timers.cooldown;//update time
@@ -47,7 +47,7 @@ app.controller('MainCtrl', ['$scope', 'time', '$interval', function($scope, time
         }
     };
     $scope.lowerSession = function() {
-        if (!timerOn) {
+        if (!timerOn  && $scope.timers.session > 1) {
       $scope.timers.session -= 1;
             if ($scope.currentMode === 'Session') {
       $scope.timeLeft = $scope.timers.session;//update time
@@ -96,13 +96,13 @@ function updateTimer() {
         $scope.timeLeft = 60 * $scope.timers.session;
         $scope.originalSetTime = $scope.timers.session;
         secs = 60 * $scope.timers.session;
-        document.querySelector(".progress-bar").style.backgroundColor = "green";  
+        document.querySelector(".progress-bar").style.backgroundColor = "green";
       } else {
         $scope.currentMode = 'Break!';
         $scope.timeLeft = 60 * $scope.timers.cooldown;
         $scope.originalSetTime = $scope.timers.cooldown;
         secs = 60 * $scope.timers.cooldown;
-        document.querySelector(".progress-bar").style.backgroundColor = "FireBrick"
+        document.querySelector(".progress-bar").style.backgroundColor = "FireBrick";
       }
     } else {
       if ($scope.currentMode === 'Break!') {
