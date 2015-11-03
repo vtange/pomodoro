@@ -1,33 +1,40 @@
-<html>
+<html data-ng-app="pomodoro">
     <head>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="style-0.css"/>
     <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
-        
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+    <script type="text/javascript" src="app.js"></script>
     </head>
-  <body>
+  <body data-ng-controller="MainCtrl as pomo">
         <div name="slide1" id="slide1" class="slide">
             <div class="centered-text">
                 <hr></hr>
                 <h1>FreeCodeCamp</h1>
                 <div class="set-timer">
                 <span>break length</span> 
-                    <h2>5</h2>
+                    <h2>{{timers.cooldown}}</h2>
                 </div>
                 
                 
                 <div class="set-timer">
                 <span>session length</span>
-                    <h2>25</h2>
+                    <h2>{{timers.session}}</h2>
                 </div>
                 
                 
                 
                 
-                <div id="clock">
-                    <hr></hr>
-            </div>
+                <article class="clock">
+                  <div class="progress-container">
+                    <div class="progress-text">
+                        <span>session length</span>
+                        <h2>{{timers.session}}</h2>
+                    </div>
+                  </div>
+                </article>
+             <hr></hr>
         </div>
   </body>
 </html>
