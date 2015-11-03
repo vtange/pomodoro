@@ -17,8 +17,11 @@
                 <span>break length</span><br>
                     <h3 class="plusMinus" data-ng-click="lowerBreak()">-</h3><h2 class="plusMinus">{{timers.cooldown}}</h2><h3 class="plusMinus" data-ng-click="addBreak()">+</h3>
                 </div>
-                
-                
+                <div class="switch">
+                  <span>start from</span>
+                  <input id="cmn-toggle-4" class="cmn-toggle cmn-toggle-round-flat" type="checkbox" data-ng-click="swapTimer()">
+                  <label for="cmn-toggle-4"></label>
+                </div>  
                 <div class="set-timer">
                 <span>session length</span><br>
                     <h3 class="plusMinus" data-ng-click="lowerSession()">-</h3><h2 class="plusMinus">{{timers.session}}</h2><h3 class="plusMinus" data-ng-click="addSession()">+</h3>

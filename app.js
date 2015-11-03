@@ -64,6 +64,22 @@ app.controller('MainCtrl', ['$scope', 'time', '$interval', function($scope, time
           return false;
       }
   }
+  $scope.swapTimer = function() {
+      if ($scope.currentMode === 'Break!') {
+        $scope.currentMode = 'Session';
+        $scope.timeLeft = 60 * $scope.timers.session;
+        $scope.originalSetTime = $scope.timers.session;
+        secs = 60 * $scope.timers.session;
+        document.querySelector(".progress-bar").style.backgroundColor = "green";
+      } else {
+        $scope.currentMode = 'Break!';
+        $scope.timeLeft = 60 * $scope.timers.cooldown;
+        $scope.originalSetTime = $scope.timers.cooldown;
+        secs = 60 * $scope.timers.cooldown;
+        document.querySelector(".progress-bar").style.backgroundColor = "FireBrick";
+      }
+  }
+  
     
   $scope.toggleTimer = function() {
     if (!timerOn) {
