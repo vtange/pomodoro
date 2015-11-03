@@ -113,6 +113,7 @@ function updateTimer() {
       var totalsecs = 60 * $scope.originalSetTime;
       var percentage = Math.abs((secs / totalsecs) * 100 - 100);
       //move the box with percentage
+      document.querySelector(".progress-bar").style.width = percentage + "%";
     }
   }
  
