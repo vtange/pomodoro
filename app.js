@@ -14,6 +14,7 @@ app.controller('MainCtrl', ['$scope', 'time', '$interval', function($scope, time
     $scope.timers = time; // load service
     $scope.timeLeft = $scope.timers.session;//shown time
     $scope.currentMode = "Session";//session mode or break mode
+    $scope.originalSetTime = $scope.timers.session;
 
     var timerOn = false;
     var secs = 60 * $scope.timeLeft;
@@ -21,14 +22,14 @@ app.controller('MainCtrl', ['$scope', 'time', '$interval', function($scope, time
     $scope.addBreak = function() {
         if (!timerOn) {
       $scope.timers.cooldown += 1;
-      $scope.timeLeft = $scope.timers.session;//update time
+      $scope.timeLeft = $scope.timers.cooldown;//update time
       secs = 60 * $scope.timeLeft;
         }
     };
     $scope.lowerBreak = function() {
         if (!timerOn) {
       $scope.timers.cooldown -= 1;
-      $scope.timeLeft = $scope.timers.session;//update time
+      $scope.timeLeft = $scope.timers.cooldown;//update time
       secs = 60 * $scope.timeLeft;
         }
     };
@@ -58,6 +59,11 @@ app.controller('MainCtrl', ['$scope', 'time', '$interval', function($scope, time
     
   $scope.toggleTimer = function() {
     if (!timerOn) {
+      if ($scope.currentMode === 'Sesson') {
+        $scope.originalSetTime = $scope.timers.cooldown;
+      } else {
+        $scope.originalSetTime = $scope.timers.session;
+      }
 
       updateTimer();
       timerOn = $interval(updateTimer, 1000);
