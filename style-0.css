@@ -54,8 +54,8 @@
   height: 30vw;
   width:30vw;
   margin:auto;
-  min-height: 100px;
-  min-width: 100px;
+  min-height: 300px;
+  min-width: 300px;
      
   position: relative; /*makes a point for child containers to connect to*/
   overflow:hidden; /*limit childs within*/
@@ -73,12 +73,8 @@
   border-radius: 50%;
 }
 
-.progress {
-  background: #000;
-  height: 20%;
-  left: 48.75%;
-  position: absolute;
-  top: 30%;
-  transform-origin: 50% 100%;
-  width: 2.5%;
+.progress-text {
+  position:relative; /* keep middle alignment*/
+  top: 50%;
+  transform: translateY(-50%);
 }

@@ -12,6 +12,10 @@ app.factory('time', [function(){
 
 app.controller('MainCtrl', ['$scope', 'time', function($scope, time){
     $scope.timers = time;
+    $scope.currentMode = "Session";
+    
+    
+    
     $scope.addbreak = function() {
       timers.cooldown += 1;
     };
