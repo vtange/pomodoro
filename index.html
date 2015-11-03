@@ -4,6 +4,7 @@
     <link rel="stylesheet" type="text/css" href="style-0.css"/>
     <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
     <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
     <script type="text/javascript" src="app.js"></script>
     </head>
@@ -29,6 +30,7 @@
                 <article class="clock" data-ng-click="toggleTimer()">
                   <div class="progress-container">
                     <div class="progress-text">
+                        <h3 data-ng-show="checkTimer()"><i class="fa fa-pause"></i>&#9612;&#9612;</h3>
                         <h2>{{currentMode}}</h2>
                         <h2>{{timeLeft}}</h2>
                     </div>

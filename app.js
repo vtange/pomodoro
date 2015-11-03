@@ -17,6 +17,44 @@ app.controller('MainCtrl', ['$scope', 'time', '$interval', function($scope, time
 
     var timerOn = false;
     var secs = 60 * $scope.timeLeft;
+
+    $scope.addBreak = function() {
+        if (!timerOn) {
+      $scope.timers.cooldown += 1;
+      $scope.timeLeft = $scope.timers.session;//update time
+      secs = 60 * $scope.timeLeft;
+        }
+    };
+    $scope.lowerBreak = function() {
+        if (!timerOn) {
+      $scope.timers.cooldown -= 1;
+      $scope.timeLeft = $scope.timers.session;//update time
+      secs = 60 * $scope.timeLeft;
+        }
+    };
+    $scope.addSession = function() {
+        if (!timerOn) {
+      $scope.timers.session += 1;
+      $scope.timeLeft = $scope.timers.session;//update time
+      secs = 60 * $scope.timeLeft;
+        }
+    };
+    $scope.lowerSession = function() {
+        if (!timerOn) {
+      $scope.timers.session -= 1;
+      $scope.timeLeft = $scope.timers.session;//update time
+      secs = 60 * $scope.timeLeft;
+        }
+    };
+
+  $scope.checkTimer = function() {
+      if (timerOn == false) {
+        return true;
+      }
+      else {
+          return false;
+      }
+  }
     
   $scope.toggleTimer = function() {
     if (!timerOn) {
@@ -63,41 +101,7 @@ function updateTimer() {
       //move the box with percentage
     }
   }
-  
-
-      
-    $scope.addBreak = function() {
-        if (!timerOn) {
-      $scope.timers.cooldown += 1;
-      $scope.timeLeft = $scope.timers.session;//update time
-      secs = 60 * $scope.timeLeft;
-        }
-    };
-    $scope.lowerBreak = function() {
-        if (!timerOn) {
-      $scope.timers.cooldown -= 1;
-      $scope.timeLeft = $scope.timers.session;//update time
-      secs = 60 * $scope.timeLeft;
-        }
-    };
-    $scope.addSession = function() {
-        if (!timerOn) {
-      $scope.timers.session += 1;
-      $scope.timeLeft = $scope.timers.session;//update time
-      secs = 60 * $scope.timeLeft;
-        }
-    };
-    $scope.lowerSession = function() {
-        if (!timerOn) {
-      $scope.timers.session -= 1;
-      $scope.timeLeft = $scope.timers.session;//update time
-      secs = 60 * $scope.timeLeft;
-        }
-    };
-    
-    
-    
-      
+ 
   function secondsToHms(sec) {
     sec = Number(sec);
     var h = Math.floor(sec / 3600);
