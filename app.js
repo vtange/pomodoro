@@ -20,15 +20,7 @@ app.controller('MainCtrl', ['$scope', 'time', '$interval', function($scope, time
     
   $scope.toggleTimer = function() {
     if (!timerOn) {
-        //pause and unpause with changes
-      if ($scope.currentName === 'Session') {
-        $scope.timeLeft = $scope.timers.cooldown;
-        secs = 60 * $scope.timeLeft;
-      } else {
-        $scope.timeLeft = $scope.timers.session;
-        secs = 60 * $scope.timeLeft;
-      }
-      
+
       updateTimer();
       timerOn = $interval(updateTimer, 1000);
     } else {
@@ -47,19 +39,19 @@ function updateTimer() {
 			audio.play();
       
       // toggle break and session during hit 0
-      if ($scope.sessionName === 'Break!') {
-        $scope.sessionName = 'Session';
+      if ($scope.currentMode === 'Break!') {
+        $scope.currentMode = 'Session';
         $scope.timeLeft = 60 * $scope.timers.session;
         $scope.originalSetTime = $scope.timers.session;
         secs = 60 * $scope.timers.session;
       } else {
-        $scope.sessionName = 'Break!';
+        $scope.currentMode = 'Break!';
         $scope.timeLeft = 60 * $scope.timers.cooldown;
         $scope.originalSetTime = $scope.timers.cooldown;
         secs = 60 * $scope.timers.cooldown;
       }
     } else {
-      if ($scope.sessionName === 'Break!') {
+      if ($scope.currentMode === 'Break!') {
         //use and move red box
       } else {
         //use and move grn box
@@ -77,23 +69,29 @@ function updateTimer() {
     $scope.addBreak = function() {
         if (!timerOn) {
       $scope.timers.cooldown += 1;
+      $scope.timeLeft = $scope.timers.session;//update time
+      secs = 60 * $scope.timeLeft;
         }
     };
     $scope.lowerBreak = function() {
         if (!timerOn) {
       $scope.timers.cooldown -= 1;
+      $scope.timeLeft = $scope.timers.session;//update time
+      secs = 60 * $scope.timeLeft;
         }
     };
     $scope.addSession = function() {
         if (!timerOn) {
       $scope.timers.session += 1;
       $scope.timeLeft = $scope.timers.session;//update time
+      secs = 60 * $scope.timeLeft;
         }
     };
     $scope.lowerSession = function() {
         if (!timerOn) {
       $scope.timers.session -= 1;
       $scope.timeLeft = $scope.timers.session;//update time
+      secs = 60 * $scope.timeLeft;
         }
     };
     
