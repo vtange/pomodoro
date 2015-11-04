@@ -12,13 +12,13 @@ app.factory('time', [function(){
 
 app.controller('MainCtrl', ['$scope', 'time', '$interval', function($scope, time, $interval){
     $scope.timers = time; // load service
-    $scope.timeLeft = $scope.timers.session;//shown time
     $scope.currentMode = "Session";//session mode or break mode
     $scope.originalSetTime = $scope.timers.session;
 
     var timerOn = false;
-    var secs = 60 * $scope.timeLeft;
-
+    var secs = 60 * $scope.timers.session;
+    $scope.timeLeft = secondsToHms(secs);//shown time
+    
     $scope.addBreak = function() {
         if (!timerOn) {
       $scope.timers.cooldown += 1;
@@ -67,15 +67,15 @@ app.controller('MainCtrl', ['$scope', 'time', '$interval', function($scope, time
   $scope.swapTimer = function() {
       if ($scope.currentMode === 'Break!') {
         $scope.currentMode = 'Session';
-        $scope.timeLeft = 60 * $scope.timers.session;
         $scope.originalSetTime = $scope.timers.session;
         secs = 60 * $scope.timers.session;
+        $scope.timeLeft = secondsToHms(secs);
         document.querySelector(".progress-bar").style.backgroundColor = "green";
       } else {
         $scope.currentMode = 'Break!';
-        $scope.timeLeft = 60 * $scope.timers.cooldown;
         $scope.originalSetTime = $scope.timers.cooldown;
         secs = 60 * $scope.timers.cooldown;
+        $scope.timeLeft = secondsToHms(secs);
         document.querySelector(".progress-bar").style.backgroundColor = "FireBrick";
       }
   }
