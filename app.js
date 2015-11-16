@@ -83,7 +83,7 @@ app.controller('MainCtrl', ['$scope', 'time', '$interval', function($scope, time
     
   $scope.toggleTimer = function() {
     if (!timerOn) {
-      if ($scope.currentMode === 'Session') {
+      if ($scope.currentMode === 'Session') {///RESETS original timer time so bar resets.
         $scope.originalSetTime = $scope.timers.session;
       } else {
         $scope.originalSetTime = $scope.timers.cooldown;
@@ -107,39 +107,23 @@ function updateTimer() {
 			audio.play();
       
       // toggle break and session during hit 0
-      if ($scope.currentMode === 'Break!') {
-        $scope.currentMode = 'Session';
-        $scope.timeLeft = 60 * $scope.timers.session;
-        $scope.originalSetTime = $scope.timers.session;
-        secs = 60 * $scope.timers.session;
-        document.querySelector(".progress-bar").style.backgroundColor = "green";
-      } else {
-        $scope.currentMode = 'Break!';
-        $scope.timeLeft = 60 * $scope.timers.cooldown;
-        $scope.originalSetTime = $scope.timers.cooldown;
-        secs = 60 * $scope.timers.cooldown;
-        document.querySelector(".progress-bar").style.backgroundColor = "FireBrick";
-      }
+      $scope.swapTimer();
     } else {
-      if ($scope.currentMode === 'Break!') {
-        //use and move red box
-      } else {
-        //use and move grn box
-      }
 	  $scope.timeLeft = secondsToHms(secs);//update time left
-      
+        
+      //control progress bar
       var totalsecs = 60 * $scope.originalSetTime;
       var percentage = Math.abs((secs / totalsecs) * 100 - 100);
       //move the box with percentage
       document.querySelector(".progress-bar").style.width = percentage + "%";
     }
   }
- 
-  function secondsToHms(sec) {
-    sec = Number(sec);
-    var h = Math.floor(sec / 3600);
-    var m = Math.floor(sec % 3600 / 60);
-    var s = Math.floor(sec % 3600 % 60);
+ //thanks to Thorben @ http://stackoverflow.com/questions/5539028/converting-seconds-into-hhmmss
+  function secondsToHms(d) {
+    d = Number(d);
+    var h = Math.floor(d / 3600);
+    var m = Math.floor(d % 3600 / 60);
+    var s = Math.floor(d % 3600 % 60);
     return (
       (h > 0 ? h + ":" + (m < 10 ? "0" : "") : "") + m + ":" + (s < 10 ? "0" : "") + s
     ); 
