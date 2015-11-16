@@ -13,46 +13,30 @@ app.factory('time', [function(){
 app.controller('MainCtrl', ['$scope', 'time', '$interval', function($scope, time, $interval){
     $scope.timers = time; // load service
     $scope.currentMode = "Session";//session mode or break mode
-    $scope.originalSetTime = $scope.timers.session;
+    $scope.originalSetTime = $scope.timers.session;//use for progress bar 100% tracking
 
     var timerOn = false;
     var secs = 60 * $scope.timers.session;
     $scope.timeLeft = secondsToHms(secs);//shown time
     
-    $scope.addBreak = function() {
-        if (!timerOn) {
-      $scope.timers.cooldown += 1;
-            if ($scope.currentMode === 'Break!') {
+    $scope.addBreak = function(number) {
+        if (!timerOn && $scope.timers.cooldown + number != 0) {
+      $scope.timers.cooldown += number;
+            if ($scope.currentMode === 'Break!') {//only update shown time if in break mode
       $scope.timeLeft = $scope.timers.cooldown;//update time
       secs = 60 * $scope.timeLeft;
+      $scope.timeLeft = secondsToHms(secs);//update time left to hms
             }
         }
     };
-    $scope.lowerBreak = function() {
-        if (!timerOn  && $scope.timers.cooldown > 1) {
-      $scope.timers.cooldown -= 1;
-            if ($scope.currentMode === 'Break!') {
-      $scope.timeLeft = $scope.timers.cooldown;//update time
-      secs = 60 * $scope.timeLeft;
-            }
-        }
-    };
-    $scope.addSession = function() {
-        if (!timerOn) {
-      $scope.timers.session += 1;
-              if ($scope.currentMode === 'Session') {
+    $scope.addSession = function(number) {
+        if (!timerOn && $scope.timers.cooldown + number != 0) {
+      $scope.timers.session += number;
+              if ($scope.currentMode === 'Session') {//only update shown time if in session mode
       $scope.timeLeft = $scope.timers.session;//update time
       secs = 60 * $scope.timeLeft;
+      $scope.timeLeft = secondsToHms(secs);//update time left to hms
               }
-        }
-    };
-    $scope.lowerSession = function() {
-        if (!timerOn  && $scope.timers.session > 1) {
-      $scope.timers.session -= 1;
-            if ($scope.currentMode === 'Session') {
-      $scope.timeLeft = $scope.timers.session;//update time
-      secs = 60 * $scope.timeLeft;
-            }
         }
     };
 
@@ -83,7 +67,7 @@ app.controller('MainCtrl', ['$scope', 'time', '$interval', function($scope, time
     
   $scope.toggleTimer = function() {
     if (!timerOn) {
-      if ($scope.currentMode === 'Session') {///RESETS original timer time so bar resets.
+      if ($scope.currentMode === 'Session') {///RESETS original timer time so bar resets to 0 and doens't continue.
         $scope.originalSetTime = $scope.timers.session;
       } else {
         $scope.originalSetTime = $scope.timers.cooldown;

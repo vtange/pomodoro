@@ -15,7 +15,7 @@
                 <h1>FreeCodeCamp</h1>
                 <div class="set-timer"><!--timer setter-->
                 <span>break length</span><br>
-                    <h3 class="plusMinus" data-ng-click="lowerBreak()">-</h3><h2 class="plusMinus">{{timers.cooldown}}</h2><h3 class="plusMinus" data-ng-click="addBreak()">+</h3>
+                    <h3 class="plusMinus" data-ng-click="addBreak(-1)">-</h3><h2 class="plusMinus">{{timers.cooldown}}</h2><h3 class="plusMinus" data-ng-click="addBreak(1)">+</h3>
                 </div>
                 <div class="switch">
                   <span>Swap</span>
@@ -24,7 +24,7 @@
                 </div>  
                 <div class="set-timer">
                 <span>session length</span><br>
-                    <h3 class="plusMinus" data-ng-click="lowerSession()">-</h3><h2 class="plusMinus">{{timers.session}}</h2><h3 class="plusMinus" data-ng-click="addSession()">+</h3>
+                    <h3 class="plusMinus" data-ng-click="addSession(-1)">-</h3><h2 class="plusMinus">{{timers.session}}</h2><h3 class="plusMinus" data-ng-click="addSession(1)">+</h3>
                 </div>
                 
                 
